@@ -25,7 +25,6 @@
     "php": "^8.0",
     "ext-json": "*",
     "inertiajs/inertia-laravel": "^v2.0.0",
-    "illuminate/support": "^v10.42.0",
     "statamic/cms": "^5.17.0"
   },
   "require-dev": {
