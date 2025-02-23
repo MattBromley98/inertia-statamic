@@ -17,14 +17,15 @@
     },
     {
       "name": "Matthew Bromley",
+      "email": "noreply@tenantce.com"
     }
   ],
   "require": {
     "php": "^8.0",
     "ext-json": "*",
-    "inertiajs/inertia-laravel": "^v0.6.11",
+    "inertiajs/inertia-laravel": "^v2.0.1",
     "illuminate/support": "^v10.42.0",
-    "statamic/cms": "v4.43.0"
+    "statamic/cms": "5.17.0"
   },
   "require-dev": {
     "nunomaduro/collision": "^5.1|^6.0",
