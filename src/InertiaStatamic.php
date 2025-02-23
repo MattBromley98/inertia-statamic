@@ -24,9 +24,9 @@ class InertiaStatamic
      */
     public function handle(Request $request, Closure $next)
     {
-        $page = Data::findByRequestUrl($request->url());
+        $page = \Statamic\Facades\Entry::query()->where('slug', substr($request->getRequestUri(), 1))->first();
 
-        if (($page instanceof Page || $page instanceof Entry) && $page->template() === 'app') {
+        if (($page instanceof Page || $page instanceof Entry)) {
             return Inertia::render(
                 $this->buildComponentPath($page),
                 array_merge(

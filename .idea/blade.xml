@@ -52,9 +52,11 @@
       <data directive="@endonce" />
       <data directive="@endphp" />
       <data directive="@endprepend" />
+      <data directive="@endprependOnce" />
       <data directive="@endprependonce" />
       <data directive="@endproduction" />
       <data directive="@endpush" />
+      <data directive="@endpushOnce" />
       <data directive="@endpushif" />
       <data directive="@endpushonce" />
       <data directive="@endsection" />
@@ -112,6 +114,7 @@
       <data directive="@stop" />
       <data directive="@style" injection="true" prefix="class=&quot;&lt;?php echo \Illuminate\Support\Arr::toCssStyles(" suffix=")?&gt;&quot;" />
       <data directive="@switch" injection="true" prefix="&lt;?php&#10;switch(" suffix="): ?&gt;" />
+      <data directive="@tags" injection="true" prefix="&lt;?php _bladeDirective(" suffix="); ?&gt;" />
       <data directive="@unless" injection="true" prefix="&lt;?php&#10;if (! (" suffix=")): ?&gt;" />
       <data directive="@unset" injection="true" prefix="&lt;?php&#10;unset(" suffix="); ?&gt;" />
       <data directive="@verbatim" />
