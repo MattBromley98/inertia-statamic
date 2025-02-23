@@ -30,7 +30,7 @@ class InertiaStatamic
             return Inertia::render(
                 $this->buildComponentPath($page),
                 array_merge(
-                    $this->buildProps($page),
+                    ['data' => $this->buildProps($page)],
                     ['navigation' => $this->buildNavigation()]
                 )
             );
