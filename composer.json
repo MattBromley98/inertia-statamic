@@ -3,7 +3,7 @@
   "description": "A fork of the Inertia.js Statamic adapter by Adam Campbell",
   "type": "library",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "v1.0.0",
   "keywords": [
     "laravel",
     "inertia",

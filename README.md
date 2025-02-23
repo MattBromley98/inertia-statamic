@@ -1,12 +1,18 @@
 # Inertia.js adapter for Statamic
 
-[Statamic](https://statamic.com) server side adapter for [Inertia.js](https://inertiajs.com) to build single-page apps, without building an API.
+[Statamic](https://statamic.com) server side adapter for [Inertia.js](https://inertiajs.com) to build single-page apps, without building an API. This package
+has been forked and modified to support updated Dependencies, specifically Inertia V2. 
 
-[![Latest Stable Version](https://poser.pugx.org/hotmeteor/inertia-statamic/v)](//packagist.org/packages/hotmeteor/inertia-statamic)
+## Requirements
+
+- PHP 8 or higher
+- Inertia V2 (Inertia V1 support has been dropped)
+- Front-end framework of Svelte, Vue 2/3, or React
+- Statamic installed and working on your project
 
 ## Installation
 
-You can install the package through Composer.
+You can install the latest stable version of the package through Composer.
 
 ```bash
 composer require mattbromley/inertia-statamic
