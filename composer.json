@@ -23,9 +23,9 @@
   "require": {
     "php": "^8.0",
     "ext-json": "*",
-    "inertiajs/inertia-laravel": "^v2.0.1",
+    "inertiajs/inertia-laravel": "^v2.0.0",
     "illuminate/support": "^v10.42.0",
-    "statamic/cms": "5.17.0"
+    "statamic/cms": "^5.17.0"
   },
   "require-dev": {
     "nunomaduro/collision": "^5.1|^6.0",
