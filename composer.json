@@ -30,8 +30,7 @@
   "require-dev": {
     "nunomaduro/collision": "^5.1|^6.0",
     "orchestra/testbench": "^v8.17.0",
-    "phpunit/phpunit": "^9.0",
-    "roave/security-advisories": "@dev"
+    "phpunit/phpunit": "^9.0"
   },
   "autoload": {
     "psr-4": {
