@@ -40,22 +40,16 @@ class InertiaStatamic
     }
 
     /**
-     * Build the path for the component based on URI segments and slug.
+     * Build the path for the component based on Pages Blueprint Name
      *
      * @param $data
      * @return string
      */
-    protected function buildComponentPath($data)
+    protected function buildComponentPath($data): string
     {
         $values = $data->toAugmentedArray();
 
-        $segments = array_merge(explode('/', $values['uri']), [(string) $values['slug']]);
-        $segments = array_unique(array_filter($segments));
-        $segments = array_map(function ($segment) {
-            return Str::studly($segment);
-        }, $segments);
-
-        return implode('/', $segments);
+        return $values['blueprint']->raw()->contents()['title'];
     }
 
     /**
