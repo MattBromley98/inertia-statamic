@@ -24,7 +24,8 @@ class InertiaStatamic
      */
     public function handle(Request $request, Closure $next)
     {
-        $page = Data::findByUri(str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()));
+        $queryString = $request->getQueryString() ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : 'index';
+        $page = Data::findByUri($queryString);
 
         if (($page instanceof Page || $page instanceof Entry)) {
             return Inertia::render(
