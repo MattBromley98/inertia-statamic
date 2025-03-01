@@ -24,7 +24,7 @@ class InertiaStatamic
      */
     public function handle(Request $request, Closure $next)
     {
-        $queryString = $request->getRequestUri() ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
+        $queryString = $request->getRequestUri()  ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
         $page = Data::findByUri($queryString);
 
         if (($page instanceof Page || $page instanceof Entry)) {
@@ -97,7 +97,7 @@ class InertiaStatamic
      */
     protected function buildNavigation()
     {
-        $navData = Structure::findByHandle('home');
+        $navData = Structure::findByHandle('navigation');
 
         if (!$navData) {
             return [];
