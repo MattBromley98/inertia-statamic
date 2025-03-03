@@ -24,13 +24,14 @@ class InertiaStatamic
      */
     public function handle(Request $request, Closure $next)
     {
-        $page = Data::findByRequestUrl($request->url());
+        $queryString = $request->getRequestUri()  ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
+        $page = Data::findByUri($queryString);
 
-        if (($page instanceof Page || $page instanceof Entry) && $page->template() === 'app') {
+        if (($page instanceof Page || $page instanceof Entry)) {
             return Inertia::render(
                 $this->buildComponentPath($page),
                 array_merge(
-                    $this->buildProps($page),
+                    ['data' => $this->buildProps($page)],
                     ['navigation' => $this->buildNavigation()]
                 )
             );
@@ -40,22 +41,16 @@ class InertiaStatamic
     }
 
     /**
-     * Build the path for the component based on URI segments and slug.
+     * Build the path for the component based on Pages Blueprint Name
      *
      * @param $data
      * @return string
      */
-    protected function buildComponentPath($data)
+    protected function buildComponentPath($data): string
     {
         $values = $data->toAugmentedArray();
 
-        $segments = array_merge(explode('/', $values['uri']), [(string) $values['slug']]);
-        $segments = array_unique(array_filter($segments));
-        $segments = array_map(function ($segment) {
-            return Str::studly($segment);
-        }, $segments);
-
-        return implode('/', $segments);
+        return $values['blueprint']->raw()->contents()['title'];
     }
 
     /**
@@ -88,7 +83,7 @@ class InertiaStatamic
             return $this->buildProps($data->toAugmentedArray());
         }
 
-        if(gettype($data) === 'string' && Uuid::isValid($data)) {
+        if(gettype($data) === 'string' && Str::isUuid($data)) {
             $data = Data::find($data);
         }
 
@@ -102,12 +97,12 @@ class InertiaStatamic
      */
     protected function buildNavigation()
     {
-        $navData = Structure::findByHandle('home');
+        $navData = Structure::findByHandle('navigation');
 
         if (!$navData) {
             return [];
         }
 
-        return $navData->trees()->get('default')->pages()->all()->toArray();
+        return $navData->trees()->get('default')->tree();
     }
 }

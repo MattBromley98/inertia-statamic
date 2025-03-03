@@ -3,7 +3,6 @@
   "description": "A fork of the Inertia.js Statamic adapter by Adam Campbell",
   "type": "library",
   "license": "MIT",
-  "version": "v1.0.0",
   "keywords": [
     "laravel",
     "inertia",
@@ -30,8 +29,7 @@
   "require-dev": {
     "nunomaduro/collision": "^5.1|^6.0",
     "orchestra/testbench": "^v8.17.0",
-    "phpunit/phpunit": "^9.0",
-    "roave/security-advisories": "@dev"
+    "phpunit/phpunit": "^9.0"
   },
   "autoload": {
     "psr-4": {
