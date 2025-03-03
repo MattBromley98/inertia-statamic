@@ -20,6 +20,9 @@ composer require mattbromley/inertia-statamic
 
 ## Usage
 
+### Getting Started
+The easiest way to get started using this adapter is by forking/using the template repository on my GitHub! You can find this [here](https://github.com/MattBromley98/laravel-inertia-cms-template)! This includes a basic setup of this adapter in a Inertia/Svelte/Laravel project, with basic components for SEO, Navigation all Premade along with Dynamic Components!
+
 ### Setup
 
 The Inertia adapter works for any page or entry content available through Statamic Collections.
