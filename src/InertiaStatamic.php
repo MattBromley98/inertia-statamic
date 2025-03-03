@@ -103,6 +103,6 @@ class InertiaStatamic
             return [];
         }
 
-        return $navData->trees()->get('default')->pages()->all()->toArray();
+        return $navData->trees()->get('default')->tree();
     }
 }
