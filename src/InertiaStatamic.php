@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use JsonSerializable;
@@ -25,7 +26,11 @@ class InertiaStatamic
     public function handle(Request $request, Closure $next)
     {
         $queryString = $request->getRequestUri()  ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
-        $page = Data::findByUri($queryString);
+
+        // Cache the Data::findByUri result with a unique key based on the URI
+        $page = Cache::remember('inertia-statamic.page.' . md5($queryString), config('statamic.stache.cache_time', 3600), function () use ($queryString) {
+            return Data::findByUri($queryString);
+        });
 
         if (($page instanceof Page || $page instanceof Entry)) {
             return Inertia::render(
