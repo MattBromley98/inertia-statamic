@@ -25,25 +25,44 @@ class InertiaStatamic
      */
     public function handle(Request $request, Closure $next)
     {
-        $queryString = $request->getRequestUri()  ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
+        $queryString = $request->getRequestUri() ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
+        $cacheKey = 'inertia-statamic.' . md5($queryString);
+        $cacheDuration = config('statamic.stache.cache_time', 3600);
 
-        // Cache the Data::findByUri result with a unique key based on the URI
-        if(config('app.env') === 'production') {
-            $page = Cache::remember('inertia-statamic.page.' . md5($queryString), config('statamic.stache.cache_time', 3600), function () use ($queryString) {
-                return Data::findByUri($queryString);
+        if (config('app.env') === 'production') {
+            // Try to get the complete response data from cache
+            $responseData = Cache::remember($cacheKey, $cacheDuration, function () use ($queryString) {
+                $page = Data::findByUri($queryString);
+
+                if (!($page instanceof Page || $page instanceof Entry)) {
+                    return null;
+                }
+
+                return [
+                    'component' => $this->buildComponentPath($page),
+                    'props' => array_merge(
+                        ['data' => $this->buildProps($page)],
+                        ['navigation' => $this->buildNavigation()]
+                    )
+                ];
             });
-        } else {
-            $page = Data::findByUri($queryString);
-        }
 
-        if (($page instanceof Page || $page instanceof Entry)) {
-            return Inertia::render(
-                $this->buildComponentPath($page),
-                array_merge(
-                    ['data' => $this->buildProps($page)],
-                    ['navigation' => $this->buildNavigation()]
-                )
-            );
+            if ($responseData) {
+                return Inertia::render($responseData['component'], $responseData['props']);
+            }
+        } else {
+            // In non-production environments, don't use caching
+            $page = Data::findByUri($queryString);
+
+            if (($page instanceof Page || $page instanceof Entry)) {
+                return Inertia::render(
+                    $this->buildComponentPath($page),
+                    array_merge(
+                        ['data' => $this->buildProps($page)],
+                        ['navigation' => $this->buildNavigation()]
+                    )
+                );
+            }
         }
 
         return $next($request);
