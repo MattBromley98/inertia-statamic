@@ -28,9 +28,13 @@ class InertiaStatamic
         $queryString = $request->getRequestUri()  ? str_replace('?' . $request->getQueryString(), '', $request->getRequestUri()) : '/index';
 
         // Cache the Data::findByUri result with a unique key based on the URI
-        $page = Cache::remember('inertia-statamic.page.' . md5($queryString), config('statamic.stache.cache_time', 3600), function () use ($queryString) {
-            return Data::findByUri($queryString);
-        });
+        if(config('app.env') === 'production') {
+            $page = Cache::remember('inertia-statamic.page.' . md5($queryString), config('statamic.stache.cache_time', 3600), function () use ($queryString) {
+                return Data::findByUri($queryString);
+            });
+        } else {
+            $page = Data::findByUri($queryString);
+        }
 
         if (($page instanceof Page || $page instanceof Entry)) {
             return Inertia::render(
